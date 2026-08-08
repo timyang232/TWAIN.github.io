@@ -123,6 +123,28 @@ a:hover { color: var(--crimson-deep); }
 .byline .authors { color: var(--text); font-weight: 500; }
 .byline .affil { display: block; margin-top: 4px; }
 
+/*
+ * Author links keep the text colour and carry a faint crimson rule instead.
+ * Three names rendered in link-crimson would read as the loudest thing on the
+ * page, above the wordmark; the underline is enough to say "these are links".
+ */
+.byline a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(186, 12, 47, 0.3);
+  transition: color 180ms var(--ease-out), border-color 180ms var(--ease-out);
+}
+
+.byline a:hover { color: var(--crimson); border-bottom-color: var(--crimson); }
+
+/*
+ * The wordmark is painted by clipping the h1's gradient to its text, so the
+ * anchor inside must stay `transparent` -- give it a colour of its own and it
+ * paints over the gradient with a flat fill.
+ */
+.wordmark a { color: transparent; text-decoration: none; }
+.wordmark a:focus-visible { outline: 3px solid var(--crimson); outline-offset: 6px; border-radius: 6px; }
+
 /* pill links */
 
 .links {
