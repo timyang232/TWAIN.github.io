@@ -137,14 +137,6 @@ a:hover { color: var(--crimson-deep); }
 
 .byline a:hover { color: var(--crimson); border-bottom-color: var(--crimson); }
 
-/*
- * The wordmark is painted by clipping the h1's gradient to its text, so the
- * anchor inside must stay `transparent` -- give it a colour of its own and it
- * paints over the gradient with a flat fill.
- */
-.wordmark a { color: transparent; text-decoration: none; }
-.wordmark a:focus-visible { outline: 3px solid var(--crimson); outline-offset: 6px; border-radius: 6px; }
-
 /* pill links */
 
 .links {
