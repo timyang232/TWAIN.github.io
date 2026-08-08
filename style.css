@@ -1,0 +1,364 @@
+/*
+ * TWAIN project page.
+ *
+ * The palette, radii, shadows and gradients are the ones the TWAIN app itself
+ * uses (app/src/constants/theme.ts), so the site and the product read as one
+ * thing rather than two. Brand ink is a warm near-black plum, not neutral black:
+ * every shadow is tinted with it, which is most of why white surfaces here look
+ * lit rather than printed.
+ *
+ * No build step and no framework. This is served from a PROJECT page
+ * (timyang232.github.io/TWAIN.github.io/), so every path must stay relative --
+ * a leading slash would resolve to the account root and 404.
+ */
+
+:root {
+  --crimson: #BA0C2F;
+  --crimson-deep: #8E0A24;
+  --crimson-dark: #6E0A2A;
+  --green: #215732;
+  --green-deep: #1B4A2A;
+
+  --canvas: #FAF8F8;
+  --surface: #FFFFFF;
+  --ink: #1A060C;
+  --text: #16161A;
+  --text-2: #5A5560;
+  --border: #E8E2E4;
+
+  --shadow-card: 0 1px 2px rgba(26, 6, 12, 0.05), 0 4px 12px rgba(26, 6, 12, 0.045);
+  --shadow-raised: 0 2px 4px rgba(26, 6, 12, 0.07), 0 10px 24px rgba(26, 6, 12, 0.075);
+  --shadow-hero: 0 2px 6px rgba(26, 6, 12, 0.08), 0 16px 40px rgba(26, 6, 12, 0.10);
+
+  --r-control: 10px;
+  --r-card: 14px;
+  --r-hero: 18px;
+  --r-pill: 999px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --measure: 68ch;
+  --wide: 1080px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--text);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* The warm wash at the top of the page. Deliberately almost invisible: if you
+   can see where it ends it is too strong. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 420px;
+  background: linear-gradient(
+    180deg,
+    rgba(186, 12, 47, 0.075) 0%,
+    rgba(186, 12, 47, 0.028) 50%,
+    rgba(250, 248, 248, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+main, header, footer { position: relative; z-index: 1; }
+
+a { color: var(--crimson); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { color: var(--crimson-deep); }
+
+.wrap { max-width: var(--wide); margin: 0 auto; padding: 0 24px; }
+.prose { max-width: var(--measure); }
+
+/* ---------------------------------------------------------------- masthead */
+
+.masthead { padding: 76px 0 8px; text-align: center; }
+
+.eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--crimson);
+  background: rgba(186, 12, 47, 0.07);
+  border-radius: var(--r-pill);
+  padding: 6px 14px;
+  margin-bottom: 22px;
+}
+
+.wordmark {
+  font-size: clamp(56px, 12vw, 104px);
+  line-height: 0.92;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  margin: 0;
+  background: linear-gradient(135deg, var(--crimson-deep) 0%, var(--crimson) 55%, var(--crimson-dark) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.expansion {
+  margin: 14px auto 0;
+  max-width: 30ch;
+  font-size: clamp(19px, 2.4vw, 25px);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  color: var(--text);
+}
+
+.byline { margin: 26px auto 0; max-width: 60ch; color: var(--text-2); font-size: 16px; }
+.byline .authors { color: var(--text); font-weight: 500; }
+.byline .affil { display: block; margin-top: 4px; }
+
+/* pill links */
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 20px;
+  border-radius: var(--r-pill);
+  background: var(--ink);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: var(--shadow-card);
+  transition: transform 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
+}
+
+.links a:hover { transform: translateY(-2px); box-shadow: var(--shadow-raised); color: #fff; }
+.links a:active { transform: translateY(0) scale(0.985); }
+.links a svg { width: 16px; height: 16px; fill: currentColor; }
+
+.links a.primary {
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-deep) 100%);
+}
+
+/* ------------------------------------------------------------------ teaser */
+
+.teaser {
+  margin: 60px 0 0;
+  padding: 30px 26px 26px;
+  background: var(--surface);
+  border-radius: var(--r-hero);
+  box-shadow: var(--shadow-hero);
+}
+
+/* The pipeline diagram is wide by nature -- eleven labelled stages. Rather than
+   shrink the type until it is unreadable on a phone, it keeps a legible minimum
+   width and scrolls sideways. */
+.scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.scroll-x svg { display: block; width: 100%; min-width: 760px; height: auto; }
+
+.teaser figcaption {
+  margin: 22px auto 0;
+  max-width: 62ch;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-2);
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------- sections */
+
+section { padding: 72px 0 0; }
+
+h2 {
+  font-size: clamp(28px, 4vw, 36px);
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 0 0 6px;
+}
+
+.kicker {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--crimson);
+  margin: 0 0 10px;
+}
+
+h3 { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; margin: 32px 0 6px; }
+
+p { margin: 0 0 18px; }
+.lede { font-size: 19px; line-height: 1.6; color: var(--text); }
+
+/* --------------------------------------------------------------- the cards */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(268px, 1fr));
+  gap: 18px;
+  margin-top: 30px;
+}
+
+.card {
+  background: var(--surface);
+  border-radius: var(--r-card);
+  padding: 24px 22px;
+  box-shadow: var(--shadow-card);
+  border-top: 3px solid var(--crimson);
+}
+
+.card.green { border-top-color: var(--green); }
+.card h4 { margin: 0 0 8px; font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+.card p { margin: 0; font-size: 15.5px; line-height: 1.6; color: var(--text-2); }
+
+/* the numbers strip */
+
+.figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.figure {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  padding: 20px 18px;
+  text-align: center;
+}
+
+.figure .n {
+  display: block;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--crimson);
+}
+
+.figure .l { font-size: 13.5px; color: var(--text-2); line-height: 1.45; margin-top: 6px; display: block; }
+
+/* engines */
+
+.engines { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; padding: 0; list-style: none; }
+
+.engines li {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  padding: 9px 17px;
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: var(--shadow-card);
+}
+
+.engines li span { color: var(--text-2); font-weight: 400; font-size: 13.5px; margin-left: 7px; }
+
+/* the approval-gate callout */
+
+.gate {
+  margin-top: 30px;
+  border-radius: var(--r-hero);
+  overflow: hidden;
+  box-shadow: var(--shadow-raised);
+}
+
+.gate-head {
+  background: linear-gradient(135deg, var(--crimson-deep) 0%, var(--crimson) 55%, var(--crimson-dark) 100%);
+  color: #fff;
+  padding: 26px 28px;
+}
+
+.gate-head h3 { margin: 0; color: #fff; font-size: 22px; }
+.gate-head p { margin: 8px 0 0; color: rgba(255, 255, 255, 0.9); font-size: 16px; }
+.gate-body { background: var(--surface); padding: 26px 28px; }
+.gate-body ul { margin: 0; padding-left: 20px; }
+.gate-body li { margin-bottom: 10px; color: var(--text-2); font-size: 15.5px; }
+.gate-body li:last-child { margin-bottom: 0; }
+.gate-body strong { color: var(--text); }
+
+/* code / bibtex */
+
+pre {
+  background: var(--ink);
+  color: #F4EEF0;
+  border-radius: var(--r-card);
+  padding: 22px 24px;
+  overflow-x: auto;
+  font-size: 14px;
+  line-height: 1.6;
+  font-family: "SF Mono", SFMono-Regular, ui-monospace, Menlo, Consolas, monospace;
+  box-shadow: var(--shadow-card);
+}
+
+code { font-family: "SF Mono", SFMono-Regular, ui-monospace, Menlo, Consolas, monospace; font-size: 0.92em; }
+p code, li code { background: rgba(26, 6, 12, 0.055); border-radius: 5px; padding: 1px 5px; }
+
+/* ------------------------------------------------------------------ footer */
+
+footer {
+  margin-top: 84px;
+  background: var(--ink);
+  color: rgba(255, 255, 255, 0.72);
+  padding: 44px 0;
+  font-size: 14.5px;
+}
+
+footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; align-items: baseline; }
+footer strong { color: #fff; font-weight: 600; }
+footer a { color: #fff; }
+
+/* Third-party attribution. Quieter than the footer proper, but present: the
+   share-alike terms on the Slater-Koster sets are separate from anything the
+   project says about itself. */
+.colophon {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ------------------------------------------------------- motion, and none */
+
+.reveal { opacity: 0; transform: translateY(10px); transition: opacity 320ms var(--ease-out), transform 320ms var(--ease-out); }
+.reveal.in { opacity: 1; transform: none; }
+
+/*
+ * Reduce Motion is honoured, and the reveal is defensive: `.reveal` starts at
+ * opacity 0, so if the observer never runs the content would be invisible. The
+ * no-JS fallback in the markup and this query both force it visible -- a
+ * decorative animation must never decide whether content can be read.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .links a:hover { transform: none; }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  .masthead { padding-top: 52px; }
+  .teaser { padding: 20px 14px 18px; }
+  section { padding-top: 56px; }
+}

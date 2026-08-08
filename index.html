@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TWAIN — The WashU AI-Assisted Platform for Simulation From Narration</title>
+<meta name="description" content="TWAIN turns a plain-language research request into a planned, executed and validated computational-chemistry run on the WashU RIS cluster — with a human approval gate before anything is built or executed.">
+
+<!-- Relative, not absolute: this is a PROJECT page served from a subpath
+     (/TWAIN.github.io/), so a leading slash would resolve to the account root. -->
+<link rel="stylesheet" href="./style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<meta property="og:title" content="TWAIN — The WashU AI-Assisted Platform for Simulation From Narration">
+<meta property="og:description" content="Plain-language research requests, planned and executed as real computational chemistry — with a human approval gate before anything runs.">
+<meta property="og:type" content="website">
+
+<noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <span class="eyebrow">Washington University in St.&nbsp;Louis</span>
+    <h1 class="wordmark">TWAIN</h1>
+    <p class="expansion">The WashU AI-Assisted Platform for Simulation From Narration</p>
+
+    <p class="byline">
+      <span class="authors">Tim Yang &nbsp;·&nbsp; Daniel Schwammlein &nbsp;·&nbsp; Saif Arif</span>
+      <span class="affil">
+        Faculty PI:
+        <a href="https://chemistry.washu.edu/people/robert-wexler" rel="noopener">Robert Wexler</a>,
+        Assistant Professor of Chemistry
+      </span>
+      <span class="affil">Department of Chemistry, Washington University in St.&nbsp;Louis</span>
+    </p>
+
+    <ul class="links">
+      <li>
+        <a href="https://github.com/washu-dev/TWAIN" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.2-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.5 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.75.81 1.2 1.84 1.2 3.1 0 4.43-2.7 5.4-5.27 5.69.42.36.79 1.08.79 2.18v3.23c0 .31.2.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"/></svg>
+          Code
+        </a>
+      </li>
+      <li>
+        <a href="#how-it-works">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h10v2H4z"/></svg>
+          How it works
+        </a>
+      </li>
+      <li>
+        <a href="#status">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-2h2zm0-4h-2V7h2z"/></svg>
+          Status
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <!-- ------------------------------------------------------------ teaser -->
+    <figure class="teaser reveal">
+      <div class="scroll-x">
+        <svg viewBox="0 0 1200 200" role="img" aria-labelledby="pipe-title pipe-desc">
+          <title id="pipe-title">The eleven stages of a TWAIN run</title>
+          <desc id="pipe-desc">A request enters at INTAKE and moves through CLARIFY, DECOMPOSE, DISCOVER and PLAN. A human approval gate sits after PLAN; nothing is built or submitted to the cluster until a researcher approves. The run then continues through BUILD, EXECUTE, INTERPRET, VALIDATE, ACCEPT and TERMINATE.</desc>
+
+          <defs>
+            <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#8E0A24"/>
+              <stop offset="55%" stop-color="#BA0C2F"/>
+              <stop offset="100%" stop-color="#6E0A2A"/>
+            </linearGradient>
+            <linearGradient id="go" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#215732"/>
+              <stop offset="100%" stop-color="#1B4A2A"/>
+            </linearGradient>
+          </defs>
+
+          <line x1="70" y1="110" x2="1135" y2="110" stroke="#E8E2E4" stroke-width="2"/>
+
+          <!-- y is stated on every text: an SVG <text> with no y defaults to 0 and
+               renders its baseline at the very top edge, i.e. out of sight. -->
+          <g font-size="11" font-weight="700" letter-spacing="1.6" fill="#5A5560">
+            <text x="70" y="34">UNDERSTAND</text>
+            <text x="375" y="34">PLAN</text>
+            <text x="660" y="34">RUN</text>
+            <text x="855" y="34">JUDGE</text>
+          </g>
+
+          <!-- the approval gate: the reason the diagram exists -->
+          <rect x="505" y="46" width="90" height="122" rx="12" fill="rgba(186,12,47,0.07)" stroke="#BA0C2F" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="550" y="70" text-anchor="middle" font-size="10.5" font-weight="800" letter-spacing="0.6" fill="#BA0C2F">APPROVAL</text>
+          <text x="550" y="84" text-anchor="middle" font-size="10.5" font-weight="800" letter-spacing="0.6" fill="#BA0C2F">GATE</text>
+          <text x="550" y="158" text-anchor="middle" font-size="10" fill="#8E0A24">you decide</text>
+
+          <g font-size="12" font-weight="700" fill="#16161A" text-anchor="middle">
+            <circle cx="70"   cy="110" r="9" fill="url(#brand)"/><text x="70"   y="140">INTAKE</text>
+            <circle cx="165"  cy="110" r="9" fill="url(#brand)"/><text x="165"  y="140">CLARIFY</text>
+            <circle cx="265"  cy="110" r="9" fill="url(#brand)"/><text x="265"  y="140">DECOMPOSE</text>
+            <circle cx="375"  cy="110" r="9" fill="url(#brand)"/><text x="375"  y="140">DISCOVER</text>
+            <circle cx="465"  cy="110" r="9" fill="url(#brand)"/><text x="465"  y="140">PLAN</text>
+
+            <circle cx="660"  cy="110" r="9" fill="url(#go)"/><text x="660"  y="140">BUILD</text>
+            <circle cx="755"  cy="110" r="9" fill="url(#go)"/><text x="755"  y="140">EXECUTE</text>
+            <circle cx="855"  cy="110" r="9" fill="url(#go)"/><text x="855"  y="140">INTERPRET</text>
+            <circle cx="955"  cy="110" r="9" fill="url(#go)"/><text x="955"  y="140">VALIDATE</text>
+            <circle cx="1045" cy="110" r="9" fill="url(#go)"/><text x="1045" y="140">ACCEPT</text>
+            <circle cx="1135" cy="110" r="9" fill="#5A5560"/><text x="1135" y="140">TERMINATE</text>
+          </g>
+        </svg>
+      </div>
+      <figcaption>
+        A request enters as a sentence and leaves as a number with a verdict and its
+        provenance. Nothing is built and nothing is submitted to the cluster until a
+        researcher approves the plan — the gate is a stop, not a notification.
+        Three further states, off the main path, handle repairing a script and
+        re-planning a result that did not validate.
+      </figcaption>
+    </figure>
+
+    <!-- ---------------------------------------------------------- abstract -->
+    <section id="abstract" class="reveal">
+      <p class="kicker">Abstract</p>
+      <h2>Say what you want computed.</h2>
+      <div class="prose">
+        <p class="lede">
+          TWAIN turns a natural-language research request — <em>“predict the aqueous
+          solubility of aspirin at 25&nbsp;°C”</em> — into a planned, executed and
+          validated computational-chemistry run on Washington University’s RIS
+          cluster.
+        </p>
+        <p>
+          The hard part of computational chemistry is rarely the arithmetic. It is
+          choosing a defensible method, sizing the job, writing an input deck without
+          a silent unit error, getting it through the scheduler, and then knowing
+          whether the number that comes back is right. TWAIN does that work as an
+          explicit state machine and shows its reasoning at every step. You name a
+          property and a system in plain English; naming the method, the engine and
+          the basis set is its job, and it tells you what it chose before anything
+          runs.
+        </p>
+        <p>
+          It is deliberately not an oracle. A run asks when the request is genuinely
+          ambiguous, stops for human approval before it spends a core-hour, states in
+          advance what result it would accept, and reports honestly when the answer
+          misses that bar rather than presenting a number with no verdict attached.
+        </p>
+      </div>
+
+      <div class="figures">
+        <div class="figure"><span class="n">11</span><span class="l">pipeline stages, each inspectable</span></div>
+        <div class="figure"><span class="n">17</span><span class="l">curated tools in the registry</span></div>
+        <div class="figure"><span class="n">7</span><span class="l">engines provisioned on the cluster</span></div>
+        <div class="figure"><span class="n">1</span><span class="l">approval gate before anything runs</span></div>
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------------- gate -->
+    <section id="approval" class="reveal">
+      <p class="kicker">The idea</p>
+      <h2>A stop, not a notification.</h2>
+      <div class="prose">
+        <p>
+          Agentic systems tend to ask forgiveness. TWAIN asks permission, at the one
+          moment where permission is meaningful: after it knows what it intends to do
+          and what that will cost, and before any of it happens. The gate is enforced
+          in the state machine’s transition table, not merely surfaced in the
+          interface.
+        </p>
+      </div>
+
+      <div class="gate">
+        <div class="gate-head">
+          <h3>What you approve</h3>
+          <p>The plan is a document you can edit, not a summary you acknowledge.</p>
+        </div>
+        <div class="gate-body">
+          <ul>
+            <li><strong>The method.</strong> Which library and engine, and why —
+              including any substitution it had to make because the tool it wanted
+              is not installed here. TWAIN only ever plans with tools it can actually
+              import, and it says so when that changed the plan.</li>
+            <li><strong>The resources.</strong> CPUs, GPUs, RAM and wall time, each
+              seeded with TWAIN’s suggestion and each editable. Every field states
+              the cluster’s real ceiling, and an over-ask is clamped rather than
+              becoming a job the scheduler will never run.</li>
+            <li><strong>The acceptance bar.</strong> The value and tolerance the
+              result will be judged against, stated <em>before</em> the run — so the
+              verdict cannot be reverse-engineered from whatever came back.</li>
+            <li><strong>The cost.</strong> Estimated model spend and core-hours, up
+              front.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------ how it works -->
+    <section id="how-it-works" class="reveal">
+      <p class="kicker">How it works</p>
+      <h2>Eleven stages, and a run that can wait.</h2>
+      <div class="prose">
+        <p>
+          A run is a state machine, not a prompt chain. When it needs a human — a
+          clarification, the plan approval, a confirmation before an expensive
+          calculation — it <strong>suspends</strong>: the state is checkpointed to
+          Postgres and the process released, so nothing sits pinned waiting on a
+          person. A reply enqueues a resume job and the run picks up where it was.
+        </p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h4>Understand</h4>
+          <p><code>INTAKE</code> parses the request into a structured spec.
+            <code>CLARIFY</code> asks about only the fields intake left uncertain —
+            bounded, so it cannot interrogate you indefinitely.
+            <code>DECOMPOSE</code> builds a goal graph and rejects one that is
+            cyclic.</p>
+        </div>
+        <div class="card">
+          <h4>Plan</h4>
+          <p><code>DISCOVER</code> scores catalogued tools against the request and
+            keeps only those actually installed here. <code>PLAN</code> commits to a
+            toolset, sizes the job, and writes the acceptance bar.</p>
+        </div>
+        <div class="card green">
+          <h4>Run</h4>
+          <p><code>BUILD</code> generates a self-contained run bundle, which is
+            statically checked and smoke-run before it goes anywhere.
+            <code>EXECUTE</code> runs it — locally, in a container, or submitted to
+            Slurm on RIS.</p>
+        </div>
+        <div class="card green">
+          <h4>Judge</h4>
+          <p><code>INTERPRET</code> extracts metrics from stdout and output files.
+            <code>VALIDATE</code> grades them. <code>ACCEPT</code> puts the result in
+            front of you. <code>TERMINATE</code> closes the run.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------- validation -->
+    <section id="validation" class="reveal">
+      <p class="kicker">Trust</p>
+      <h2>Knowing when the answer is wrong.</h2>
+      <div class="prose">
+        <p>
+          A number from a solver is not a result. TWAIN checks its work in three
+          independent places, because the failure modes are different and any single
+          check catches only one of them.
+        </p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h4>Before it runs</h4>
+          <p>A static pass over the generated script — does it compile, does it have
+            an entrypoint, does it reference the calculator, are all names defined —
+            plus a smoke run, with real errors fed back for self-correction.</p>
+        </div>
+        <div class="card">
+          <h4>Against the literature</h4>
+          <p>Metrics are compared to a baseline database and graded into accepted,
+            needs review, or rejected. Where no baseline covers the system, the
+            plan’s own acceptance criteria are the reference — and where there is no
+            reference at all, the report says so rather than inventing a verdict.</p>
+        </div>
+        <div class="card">
+          <h4>Against physics</h4>
+          <p>A magnitude backstop checks the result against known physical ranges for
+            that property and unit. It exists for the error that agrees with itself
+            all the way through — a conversion applied twice, arriving two orders of
+            magnitude out and looking perfectly plausible.</p>
+        </div>
+      </div>
+
+      <div class="prose">
+        <p style="margin-top:26px">
+          A rejected result routes back to planning; one that needs review is
+          diagnosed and corrected. Both loops are bounded and every stop carries a
+          reason, so a run cannot quietly spend another allocation trying to argue
+          with the same answer.
+        </p>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------- engines -->
+    <section id="engines" class="reveal">
+      <p class="kicker">Where it runs</p>
+      <h2>Real engines, on a real cluster.</h2>
+      <div class="prose">
+        <p>
+          Runs execute on WashU RIS (<code>compute2</code>) through Slurm, in
+          per-engine environments provisioned on team storage. The registry
+          catalogues ten calculator engines and seventeen curated tools; these are
+          the engines currently provisioned as environments:
+        </p>
+      </div>
+
+      <ul class="engines">
+        <li>Psi4 <span>quantum chemistry</span></li>
+        <li>GPAW <span>DFT — plane-wave / LCAO</span></li>
+        <li>NWChem <span>quantum chemistry</span></li>
+        <li>CP2K <span>DFT, molecular dynamics</span></li>
+        <li>ABINIT <span>plane-wave DFT</span></li>
+        <li>Quantum&nbsp;ESPRESSO <span>plane-wave DFT</span></li>
+        <li>DFTB+ <span>tight binding</span></li>
+      </ul>
+    </section>
+
+    <!-- ------------------------------------------------------------ status -->
+    <section id="status" class="reveal">
+      <p class="kicker">Status</p>
+      <h2>Where the project actually is.</h2>
+      <div class="prose">
+        <p>
+          TWAIN is a research prototype under active development, not a finished
+          product. The pipeline — intake through planning, code generation,
+          execution on Slurm, result parsing, validation and self-correction — is
+          built and tested. The governance layer and the end-to-end chemistry
+          benchmark are still in progress.
+        </p>
+        <p>
+          The deployed web app is limited to institutional sign-in with a WUSTL Key
+          and is not open to the public. If you would like to see it, the source is
+          on <a href="https://github.com/washu-dev/TWAIN" rel="noopener">GitHub</a>
+          and runs locally with a single command.
+        </p>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span><strong>TWAIN</strong> — Washington University in St.&nbsp;Louis</span>
+    <span>
+      <a href="https://github.com/washu-dev/TWAIN" rel="noopener">GitHub</a>
+    </span>
+  </div>
+  <div class="wrap colophon">
+    <span>
+      DFTB+ workflows use the <em>mio</em> and <em>tiorg</em> Slater–Koster
+      parameter sets, licensed CC&nbsp;BY-SA&nbsp;4.0.
+    </span>
+  </div>
+</footer>
+
+<script>
+  /*
+   * Reveal on scroll, following the same rule as the app's motion layer: a
+   * decorative animation must never be what decides whether content is on screen.
+   * Elements start hidden only if JS runs AND IntersectionObserver exists AND the
+   * reader has not asked for reduced motion — otherwise the CSS leaves them
+   * visible and none of this executes.
+   */
+  (function () {
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced || !('IntersectionObserver' in window)) return;
+
+    var items = [].slice.call(document.querySelectorAll('.reveal'));
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+
+    items.forEach(function (el) { io.observe(el); });
+
+    // Failsafe: if anything above misbehaves, show everything shortly after load.
+    setTimeout(function () {
+      items.forEach(function (el) { el.classList.add('in'); });
+    }, 2500);
+  })();
+</script>
+
+</body>
+</html>
